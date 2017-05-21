@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class='panel panel-info'>
+      <div class="panel-heading">
+        <h2 class= 'centered'>Your Booking is Complete!</h2>
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt> From </dt> <dd><%= @booking.flight.from_airport.a_code %></dd>
+          <dt> To </dt> <dd><%= @booking.flight.to_airport.a_code %> </dd>
+          <dt> Departure </dt>
+            <dd><%= @booking.flight.departure
+                    .strftime("%k:%M, %A - #{@booking.flight.departure.day.ordinalize} %B %Y")%>
+            </dd>
+        </dl>
+      </div>
+      <table class="table centered">
+        <tr>
+          <th class="centered"><%= 'Passenger'.pluralize(@booking.passangers.count) %>:</th>
+        </tr>
+        <tbody>
+          <% pas_count = 0 %>
+          <% @booking.passangers.each do |pas| %>
+          <% pas_count += 1 %>
+          <tr>
+            <td><%= pas_count %></td><td><%= pas.name %></td><td><%= pas.email %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="panel-footer">
+        <h5 class="centered"><i class="fa fa-copyright" aria-hidden="true"></i> Odin Airlines </h5>
+      </div>
+    </div>
+  </div>
+</div>

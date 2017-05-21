@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 class="col-sm-offset-3 col-sm-9">Flight Booking</h1>
+      <%= form_tag(flights_path, method: :get, class: 'form-horizontal') do %>
+      <div class="form-group">
+        <%= label_tag(:from, nil, class: 'col-sm-3 control-label') %>
+        <div class="col-sm-9">
+          <%= select_tag(:from_airport, options_for_select(@airport_options,
+              selected: params[:from_airport]), class: 'form-control') %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :to, nil, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-9">
+          <%= select_tag(:to_airport, options_for_select(@airport_options,
+              selected: params[:to_airport]), class: 'form-control') %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :date, nil, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-9">
+          <%= select_tag(:departure, options_for_select(@date_options,
+              selected: params[:departure]), class: 'form-control') %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :passangers, nil, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-9">
+          <%= select_tag(:passanger_count, options_for_select(@passenger_options,
+              selected: params[:passanger_count]), class: 'form-control') %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <%= submit_tag 'Search', class: "btn btn-primary btn-block" %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @flights.nil? || @flights.size == 0 %>
+
+      <div class="col-sm-offset-3 col-sm-9 blank">
+      </div>
+
+      <%= form_tag(new_booking_path, method: :get) do %>
+        <div class="col-sm-offset-3 col-sm-9">
+          <h2>Search Resuls</h2>
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th>#</th><th>From</th><th>To</th><th>Departure</th>
+            </tr>
+            <tbody>
+              <% @flights.each do |f| %>
+                <tr>
+                  <td><%= radio_button_tag(:flt, f.id)%></td>
+                  <td><%= f.from_airport.a_code %></td>
+                  <td><%= f.to_airport.a_code %></td>
+                  <td><%= f.departure.strftime("%k:%M, %A - #{f.departure.day.ordinalize} %B %Y" ) %></td>
+                </tr>
+              <% end %>
+              <%= hidden_field_tag 'passangers', params[:passanger_count]%>
+              </tbody>
+
+          </table>
+          <tr>
+              <%= submit_tag "Continue", class: "btn btn-primary btn-block" %>
+          </tr>
+        </div>
+      <% end %>
+    
+    <% end %>
+  </div>
+</div>
