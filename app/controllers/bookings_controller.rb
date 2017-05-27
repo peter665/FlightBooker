@@ -20,6 +20,10 @@ class BookingsController < ApplicationController
     end
 
     if @booking.save
+      @booking.passangers.each do |pas|
+        PassengerMailer.thank_you_email(pas, @booking).deliver_now
+      end
+
       flash[:success] = "Booking successful!"
       redirect_to booking_path(@booking)
     else

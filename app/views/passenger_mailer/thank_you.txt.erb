@@ -1,0 +1,11 @@
+Your ticket, <%= @user.name %>
+===============================================
+
+You have successfully booked a ticket with Odin airlines,
+your ticket:
+
+From: <%= @booking.flight.from_airport.a_code %>
+To:   <%= @booking.flight.to_airport.a.code %>
+Date: <%= @booking.flight.departure %>  
+
+Thanks for flying with us!
